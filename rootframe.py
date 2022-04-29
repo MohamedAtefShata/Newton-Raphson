@@ -134,23 +134,23 @@ class Root:
         sy.place(x=20+580,y=170,width=30,height=200)
         tabel_data.configure(yscrollcommand=sy.set,)
         
-        tabel_data['columns'] = ('step', 'fx', "fdx", 'nx',)
+        tabel_data['columns'] = ('step', 'nx','nxh')
         
         tabel_data.column("#0", width=0,  stretch=tk.NO)
         tabel_data.column("step",anchor=tk.CENTER, width=70)
-        tabel_data.column("fx",anchor=tk.CENTER,width=95)
-        tabel_data.column("fdx",anchor=tk.CENTER,width=95)
+        # tabel_data.column("fx",anchor=tk.CENTER,width=95)
+        # tabel_data.column("fdx",anchor=tk.CENTER,width=95)
         # tabel_data.column("fddx",anchor=tk.CENTER,width=95)
         tabel_data.column("nx",anchor=tk.CENTER,width=110)   
-        # tabel_data.column("nxh",anchor=tk.CENTER,width=110)
+        tabel_data.column("nxh",anchor=tk.CENTER,width=110)
         
         tabel_data.heading("#0",text="",anchor=tk.CENTER)
         tabel_data.heading("step",text="n",anchor=tk.CENTER)
-        tabel_data.heading("fx",text="f(x_)",anchor=tk.CENTER)
-        tabel_data.heading("fdx",text="f'(x_)",anchor=tk.CENTER)
+        # tabel_data.heading("fx",text="f(x_)",anchor=tk.CENTER)
+        # tabel_data.heading("fdx",text="f'(x_)",anchor=tk.CENTER)
         # tabel_data.heading("fddx",text="f\"(x_)",anchor=tk.CENTER)
         tabel_data.heading("nx",text="Newton/Raphson",anchor=tk.CENTER)
-        # tabel_data.heading("nxh",text="Halleyss",anchor=tk.CENTER)
+        tabel_data.heading("nxh",text="Halleyss",anchor=tk.CENTER)
         
         self.table_row_next_id=0
         tabel_data.tag_configure('oddrow', background='white')
@@ -189,7 +189,7 @@ class Root:
         self.canvas = FigureCanvasTkAgg(self.fig, master=entered_equation_live_view)
         self.canvas.get_tk_widget().pack(side="top", fill="both", expand=True)
         self.canvas._tkcanvas.pack(side="top", fill="both", expand=True)
-        self.fig.subplots_adjust(left=0,right=1,top=1,bottom=0.1,hspace=0.1,wspace=0.1)
+        self.fig.subplots_adjust(left=0,right=0.99,top=1,bottom=0.01,hspace=0.1,wspace=0.1)
         
         
         self.ax_x_val = self.fig.add_subplot(811)
@@ -225,8 +225,8 @@ class Root:
         self.ax_xn_halley.get_xaxis().set_visible(False)
         self.ax_xn_halley.get_yaxis().set_visible(False)
         self.ax_xn_halley.set_title("halleys_method")
-        self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}+\\frac{sin(x)}{cos(x)}$",fontsize='large',horizontalalignment='center', verticalalignment='center')
-    def __set_ax_values(self,x_val="",fx="",fdx="",fddx="",xnewton=""):
+        self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}$",fontsize='large',horizontalalignment='center', verticalalignment='center')
+    def __set_ax_values(self,x_val="",fx="",fdx="",fddx="",xnewton="",xhalley=""):
         self.ax_fx.clear()    
         self.ax_fx.text(0.5,0.5,"$f(x)="+fx+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
@@ -243,6 +243,9 @@ class Root:
         self.ax_xn_newton.set_title("Newtom/Raphson")  
         self.ax_xn_newton.text(0.5,0.5,"$X_n= x_{n-1}-"+xnewton+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
+        self.ax_xn_halley.clear()
+        self.ax_xn_halley.set_title("Halley ")
+        self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}-"+xhalley+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
         self.canvas.draw()
             
@@ -263,11 +266,13 @@ class Root:
                              fx=latex(newt.fx), 
                              fdx=latex(newt.f_prime), 
                             fddx=latex(newt.f_d_prime), 
-                             xnewton=latex(newt.newton_rational))
+                            xnewton=latex(newt.newton_rational),
+                            xhalley=latex(newt.halley_rational)
+                            )
         self.tabel_data.delete(*self.tabel_data.get_children())
         self.table_row_next_id=1
         for row in view_list:
-            self.__insert_to_table([row["n"],row["fx"],row["fdx"],row["newton"]])
+            self.__insert_to_table([row["n"],row["newton"],row["hally"]])
         print("x")
                 
     def __change_input_type(self,type_val):
