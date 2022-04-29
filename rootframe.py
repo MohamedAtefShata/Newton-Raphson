@@ -6,7 +6,6 @@
 # -- import tkinter library 
 import tkinter as tk
 from tkinter import ttk
-from sympy.strategies.core import switch
 from widgets.entryplaceholder import *
 
 #------ matploit ---------------------
@@ -258,7 +257,7 @@ class Root:
         if self.input_type==0:
             eq=self.equation_entry_fx.get()
             x0=self.x0_entry_fx.get()
-            newt=NewtonRaphson(eq,x0,number_of_digits=digits)
+            newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
             view_list=newt.itteration_list
             
         
@@ -273,7 +272,7 @@ class Root:
         self.table_row_next_id=1
         for row in view_list:
             self.__insert_to_table([row["n"],row["newton"],row["hally"]])
-        print("x")
+        # print("x")
                 
     def __change_input_type(self,type_val):
             # print(self.readonly_combo.get())
