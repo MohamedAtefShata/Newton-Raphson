@@ -253,7 +253,7 @@ class Root:
         if self.input_type==0:
             eq=self.equation_entry_fx.get()
             x0=self.x0_entry_fx.get()
-            newt=NewtonRaphson(eq,float(x0),number_of_digits=digits)
+            newt=NewtonRaphson(eq,x0,number_of_digits=digits)
             view_list=newt.itteration_list
             
         

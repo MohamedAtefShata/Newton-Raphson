@@ -14,12 +14,12 @@ class NewtonRaphson:
         # formatDigits='.'+str(number_of_digits)+"f"
         self.newton_rational=sympify(fx/f_prime)
         
-        self.x_val=x0
+        
         
         self.itteration_list=[]
         
-        xn_1=x0
-        xn=xn_1
+        self.x_val=xn_1=xn=x0=Float(x0,number_of_digits)
+        
         i=1
         
         while  True:
