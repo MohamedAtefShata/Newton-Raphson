@@ -18,7 +18,7 @@ class NewtonRaphson:
         
         self.itteration_list=[]
         
-        self.x_val=xn_1=xn=x0=Float(x0,number_of_digits)
+        self.x_val=xn_1=xn=x0=Float(x0).round(number_of_digits)
         
         i=1
         

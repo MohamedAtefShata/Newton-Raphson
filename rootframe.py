@@ -33,7 +33,8 @@ class Root:
         
         self.labelfont=labelfont=("Jf Flat", 14)
         self.input_type=0
-        
+        self.title_plot_color='white'
+
         self.__build_equation_box_frame()
         self.__build_equtions_view()
         self.__build_table_view()
@@ -173,12 +174,12 @@ class Root:
             function to build equtions matploit views in frame
         '''
         
-        entered_equation_live_view_width=380
-        entered_equation_live_view_height=400
+        entered_equation_live_view_width=350
+        entered_equation_live_view_height=380
         entered_equation_live_view_dpi=100
         
         entered_equation_live_view=ttk.Label(self.frame,padding=0)
-        entered_equation_live_view.place(x=640,y=10,width=entered_equation_live_view_width,height=entered_equation_live_view_height)
+        entered_equation_live_view.place(x=640,y=50,width=entered_equation_live_view_width,height=entered_equation_live_view_height)
         
         self.fig = matplotlib.figure.Figure(figsize=((entered_equation_live_view_width/entered_equation_live_view_dpi),
                                                 (entered_equation_live_view_height/entered_equation_live_view_dpi)),
@@ -188,7 +189,7 @@ class Root:
         self.canvas = FigureCanvasTkAgg(self.fig, master=entered_equation_live_view)
         self.canvas.get_tk_widget().pack(side="top", fill="both", expand=True)
         self.canvas._tkcanvas.pack(side="top", fill="both", expand=True)
-        self.fig.subplots_adjust(left=0,hspace=0.1,wspace=0.1)
+        self.fig.subplots_adjust(left=0,right=1,top=1,bottom=0.1,hspace=0.1,wspace=0.1)
         
         
         self.ax_x_val = self.fig.add_subplot(811)
@@ -238,7 +239,8 @@ class Root:
         self.ax_fddx.clear()    
         self.ax_fddx.text(0.5,0.5,"$f''(x)="+fddx+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
-        self.ax_xn_newton.clear()    
+        self.ax_xn_newton.clear()  
+        self.ax_xn_newton.set_title("Newtom/Raphson")  
         self.ax_xn_newton.text(0.5,0.5,"$X_n= x_{n-1}-"+xnewton+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
         
@@ -286,4 +288,23 @@ class Root:
                 hide(self.eqatuation_fx)
                 hide(self.eqatuation_root)
                 
-                
+    def change_theme_mode(self,them_mode):
+        
+        
+        if them_mode=="light":
+            self.title_plot_color='black'
+            self.fig.set_facecolor('#fafafa')
+            self.tabel_data.tag_configure('oddrow', background='white')
+
+        else :
+            self.title_plot_color='white'
+            self.fig.set_facecolor('#1c1c1c')
+            self.tabel_data.tag_configure('oddrow', background='black')
+
+        self.ax_xn_newton.set_title("Newtom/Raphson",color=self.title_plot_color) 
+        self.ax_xn_halley.set_title("Halley ",color=self.title_plot_color)
+        
+  
+        
+        self.canvas.draw()
+                    
