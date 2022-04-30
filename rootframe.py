@@ -7,7 +7,8 @@
 import tkinter as tk
 from tkinter import ttk
 from widgets.entryplaceholder import *
-
+from tkinter import PhotoImage
+from widgets.dialogs import *
 #------ matploit ---------------------
 import matplotlib
 import matplotlib.pyplot as plt
@@ -37,7 +38,7 @@ class Root:
         self.__build_equation_box_frame()
         self.__build_equtions_view()
         self.__build_table_view()
-        #--------------------------------------------- 
+        #---------------------------------------------          
     def __build_equation_box_frame(self):
         # -----------eauation box frame-------------
         self.equation_box = equation_box = ttk.LabelFrame(
@@ -257,6 +258,13 @@ class Root:
         if self.input_type==0:
             eq=self.equation_entry_fx.get()
             x0=self.x0_entry_fx.get()
+                    # -----------check_input-------------
+            try:
+                sympify(eq)
+            except:
+                worried = PhotoImage(file='img\worried2.png')
+                show_message("Error in Equation", "you enter wrong equation in f(x).\nCheck your entered equation.",icon=worried)
+                
             newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
             view_list=newt.itteration_list
             
@@ -311,4 +319,5 @@ class Root:
   
         
         self.canvas.draw()
-                    
+    
+    
