@@ -34,14 +34,14 @@ class NewtonRaphson:
                               # "fx":fxi,
                               # "fdx":fxpi,
                               # "fddx":fxdpi,
-                               "newton":f'{float(xn):.{number_of_digits}f}',
+                               "newton":f'{Float(xn):.{number_of_digits}f}',
                                "hally":"--"
                                
                                })
             
             i+=1
             # print(abs(Float(xn-xn_1,number_of_digits+1)))
-            if (abs(Float(xn-xn_1,number_of_digits+1))<(epsilon/2)) or i>max_n: 
+            if (abs(Float(xn-xn_1))<(epsilon/2)) or i>max_n: 
                 break
         self.x_val=xn
         max_n=i-1
@@ -55,14 +55,14 @@ class NewtonRaphson:
             h=self.halley_rational.subs({x:xn_1})   #(2*fxi*fxpi)/((2*fxpi*fxpi)-(fxi*fxdpi))
             xn=Float(xn_1 -h).round(number_of_digits)
             
-            self.itteration_list[i]["hally"]=f'{float(xn):.{number_of_digits}f}'
+            self.itteration_list[i]["hally"]=f'{Float(xn):.{number_of_digits}f}'
             i+=1
             # print(abs(Float(xn-xn_1,number_of_digits+1)))
             if (abs(Float(xn-xn_1,number_of_digits+1))<(epsilon/2)) or i>=max_n: 
                 break
             
 
-# newt=NewtonRaphson("x**2-2",1,number_of_digits=4)
+# newt=NewtonRaphson("x**2-2",1,number_of_digits=6,epsilon="10^-100")
 # for e in newt.itteration_list:
 #     print(e)
-#
+

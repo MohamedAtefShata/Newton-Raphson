@@ -71,5 +71,5 @@ def halleys_method(f,xn,number_of_digits,epsilon=0,n = 0):
     #return list of values
     return list_of_values
 
-print(newton_method("ln(x)",0.9,10,epsilon=000000000000000000000000000000000.1))
+# print(newton_method("ln(x)",0.9,10,epsilon=000000000000000000000000000000000.1))
  

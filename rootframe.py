@@ -28,8 +28,10 @@ class Root:
         self.type_input=["f(x)=0","root","PI","e"]
         self.type_input_val={"f(x)=0":0,"root":1,"PI":2,"e":3}
         
-        self.type_digits=["1 digit","2 digits","5 digits","7 digits","9 digits","11 digits","13 digits","15 digits","16 digits","32 digits","64 digits"]
-        self.type_digits_val={"1 digit":1,"2 digits":2,"5 digits":5,"7 digits":7,"9 digits":9,"11 digits":11,"13 digits":13,"15 digits":15,"16 digits":16,"32 digits":32,"64 digits":64}
+        self.type_digits=["3 digits","6 digits","10 digits","16 digits","20 digits","24 digits","28 digits","32 digits","64 digits"]
+        self.type_digits_val={"3 digits":3,"6 digits":6,"10 digits":10,"16 digits":16,"20 digits":20,"24 digits":24,"28 digits":28,"32 digits":32,"64 digits":64}
+        
+        
         
         self.labelfont=labelfont=("Jf Flat", 14)
         self.input_type=0
@@ -128,21 +130,21 @@ class Root:
         self.tabel_data=tabel_data = ttk.Treeview(self.frame)
         tabel_data.place(x=20, y=170,width=580,height=200)
         # add scrollbars
-        # sx = ttk.Scrollbar(self.frame, orient='horizontal', command=tabel_data.xview)
-        # sx.place(x=20,y=160+200,width=600,height=20)
+        sx = ttk.Scrollbar(self.frame, orient='horizontal', command=tabel_data.xview)
+        sx.place(x=20,y=170+200,width=600,height=30)
         sy = ttk.Scrollbar(self.frame, orient='vertical', command=tabel_data.yview)
         sy.place(x=20+580,y=170,width=30,height=200)
-        tabel_data.configure(yscrollcommand=sy.set,)
+        tabel_data.configure(yscrollcommand=sy.set,xscrollcommand=sx.set)
         
         tabel_data['columns'] = ('step', 'nx','nxh')
         
         tabel_data.column("#0", width=0,  stretch=tk.NO)
-        tabel_data.column("step",anchor=tk.CENTER, width=70)
+        tabel_data.column("step",anchor=tk.CENTER, width=40)
         # tabel_data.column("fx",anchor=tk.CENTER,width=95)
         # tabel_data.column("fdx",anchor=tk.CENTER,width=95)
         # tabel_data.column("fddx",anchor=tk.CENTER,width=95)
-        tabel_data.column("nx",anchor=tk.CENTER,width=110)   
-        tabel_data.column("nxh",anchor=tk.CENTER,width=110)
+        tabel_data.column("nx",anchor=tk.CENTER,width=270)   
+        tabel_data.column("nxh",anchor=tk.CENTER,width=270)
         
         tabel_data.heading("#0",text="",anchor=tk.CENTER)
         tabel_data.heading("step",text="n",anchor=tk.CENTER)

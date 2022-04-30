@@ -54,7 +54,8 @@ if __name__ == "__main__":
     # root.change_theme_mode("dark")
     
     # change theme switch
-    agreement = tk.StringVar()
+    agreement = tk.StringVar(value="dark")
+    
 
     # var_2.trace(mode, callback)
     switch = ttk.Checkbutton(
@@ -62,11 +63,12 @@ if __name__ == "__main__":
                 variable=agreement,
                 onvalue='dark',
                 offvalue='light',
+                
                 command=lambda :change_theme(frame,root,agreement.get())
             )
     switch.place(x=900,y=15,width=100,height=30)
-
     
+    change_theme(frame,root,"dark")
     
     
     # run frame
