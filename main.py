@@ -24,6 +24,7 @@ def change_theme(frame,rootframe,val):
         # Set dark theme
         # rootframe.fig.set_facecolor('#1c1c1c')
         frame.tk.call("set_theme", "dark")
+        style.configure("Placeholder.TEntry", foreground="#a1a1a1")
 
 '''--------------------------------------------------- 
             Main Function

@@ -32,8 +32,8 @@ class Root:
         
         self.labelfont=labelfont=("Jf Flat", 14)
         self.input_type=0
-        self.title_plot_color='white'
-
+        self.title_plot_color='black'
+        
         self.__build_equation_box_frame()
         self.__build_equtions_view()
         self.__build_table_view()
@@ -223,7 +223,7 @@ class Root:
         self.ax_xn_halley = self.fig.add_subplot(818)
         self.ax_xn_halley.get_xaxis().set_visible(False)
         self.ax_xn_halley.get_yaxis().set_visible(False)
-        self.ax_xn_halley.set_title("halleys_method")
+        self.ax_xn_halley.set_title("Halley")
         self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}$",fontsize='large',horizontalalignment='center', verticalalignment='center')
     def __set_ax_values(self,x_val="",fx="",fdx="",fddx="",xnewton="",xhalley=""):
         self.ax_fx.clear()    
@@ -239,11 +239,11 @@ class Root:
         self.ax_fddx.text(0.5,0.5,"$f''(x)="+fddx+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
         self.ax_xn_newton.clear()  
-        self.ax_xn_newton.set_title("Newtom/Raphson")  
+        self.ax_xn_newton.set_title("Newtom/Raphson",color=self.title_plot_color)  
         self.ax_xn_newton.text(0.5,0.5,"$X_n= x_{n-1}-"+xnewton+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
         self.ax_xn_halley.clear()
-        self.ax_xn_halley.set_title("Halley ")
+        self.ax_xn_halley.set_title("Halley ",color=self.title_plot_color)
         self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}-"+xhalley+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
         self.canvas.draw()
