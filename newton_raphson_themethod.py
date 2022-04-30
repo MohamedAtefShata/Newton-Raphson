@@ -11,8 +11,8 @@ def newton_method(f,xn,number_of_digits,epsilon=0,n = 0):
     y_prime = diff(y,x)
     
     #initialize values
-    
     xn_1 = xn - ((y.subs({x:xn}))/(y_prime.subs({x:xn})))
+    
     list_of_values =[Float(xn,number_of_digits)]  
     
     #if we want to use epsilon
@@ -67,6 +67,9 @@ def halleys_method(f,xn,number_of_digits,epsilon=0,n = 0):
             h = (2*y.subs(x, xn)*y_prime.subs(x, xn))/((2*pow(y_prime.subs(x, xn),2))-(y.subs(x, xn)*y_double_prime.subs(x, xn)))
             xn_1 = xn - h
             n-=1
+            
     #return list of values
     return list_of_values
+
+print(newton_method("ln(x)",0.9,10,epsilon=000000000000000000000000000000000.1))
  
