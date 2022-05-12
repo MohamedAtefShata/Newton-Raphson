@@ -28,8 +28,8 @@ class Root:
         self.type_input=["f(x)=0","root","PI","e"]
         self.type_input_val={"f(x)=0":0,"root":1,"PI":2,"e":3}
         
-        self.type_digits=["3 digits","6 digits","10 digits","16 digits","20 digits","24 digits","28 digits","32 digits","64 digits"]
-        self.type_digits_val={"3 digits":3,"6 digits":6,"10 digits":10,"16 digits":16,"20 digits":20,"24 digits":24,"28 digits":28,"32 digits":32,"64 digits":64}
+        self.type_digits=["6 digits","10 digits","16 digits","20 digits","24 digits","28 digits","32 digits","64 digits"]
+        self.type_digits_val={"6 digits":7,"10 digits":11,"16 digits":17,"20 digits":21,"24 digits":25,"28 digits":29,"32 digits":33,"64 digits":65}
         
         
         
@@ -90,15 +90,19 @@ class Root:
         #
 
         text=ttk.Label(eqatuation_root,text = "P=",font=self.labelfont).place(x=20,y=27,width=20,height=40)
-        powerOfRoot_entry=EntryWithPlaceholder(eqatuation_root,"power of Root")
+        
+        self.powerOfRoot_entry=powerOfRoot_entry=EntryWithPlaceholder(eqatuation_root,"power of Root")
         powerOfRoot_entry.place(x=45,y=27,width=100,height=40)
         
         text=ttk.Label(eqatuation_root,text = "X=",font=self.labelfont).place(x=150,y=27,width=20,height=40)
         
-        innerOfRoot_entry=EntryWithPlaceholder(eqatuation_root,"inner of Root")
+        self.innerOfRoot_entry=innerOfRoot_entry=EntryWithPlaceholder(eqatuation_root,"inner of Root")
         innerOfRoot_entry.place(x=175,y=27,width=100,height=40)
        
-        
+        x0_text=ttk.Label(eqatuation_root,text = "X0=",font=self.labelfont)
+        x0_text.place(x=375,y=27,width=40,height=40)
+        self.x0_entry_root=x0_entry_root=EntryWithPlaceholder(eqatuation_root,"")
+        x0_entry_root.place(x=415,y=27,width=60,height=40)
         
         # ===========================================================================
         # ===========================================================================
@@ -229,6 +233,13 @@ class Root:
         self.ax_xn_halley.set_title("Halley")
         self.ax_xn_halley.text(0.5,0.5,"$X_n= x_{n-1}$",fontsize='large',horizontalalignment='center', verticalalignment='center')
     def __set_ax_values(self,x_val="",fx="",fdx="",fddx="",xnewton="",xhalley=""):
+        
+        fx=fx.replace("log","ln")
+        fdx=fdx.replace("log","ln")
+        fddx=fddx.replace("log","ln")
+        xnewton=xnewton.replace("log","ln")
+        xhalley=xhalley.replace("log","ln")
+        
         self.ax_fx.clear()    
         self.ax_fx.text(0.5,0.5,"$f(x)="+fx+"$",fontsize='large',horizontalalignment='center', verticalalignment='center')
         
@@ -269,7 +280,29 @@ class Root:
                 
             newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
             view_list=newt.itteration_list
-            
+        elif self.input_type ==1:
+            p=self.powerOfRoot_entry.get()
+            inner=self.innerOfRoot_entry.get()
+            x0=self.x0_entry_root.get()
+            try:
+                int(p)
+                int(inner)
+            except:
+                worried = PhotoImage(file='img\worried2.png')
+                show_message("Error in Equation", "you enter wrong equation in f(x).\nCheck your entered equation.",icon=worried)
+            eq="x^("+str(p)+") - "+str(inner)    
+            newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
+            view_list=newt.itteration_list    
+        elif self.input_type ==2:
+            x0=3
+            eq="sin(x)"    
+            newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
+            view_list=newt.itteration_list   
+        elif self.input_type ==3:
+            x0=3
+            eq="ln(x)-1"    
+            newt=NewtonRaphson(eq,x0,number_of_digits=digits,max_n=int(max_n),epsilon=epsilon)
+            view_list=newt.itteration_list   
         
         self.__set_ax_values(x_val=newt.x_val, 
                              fx=latex(newt.fx), 
