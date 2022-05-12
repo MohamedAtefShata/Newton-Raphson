@@ -12,17 +12,25 @@ def newton_method(f,xn,number_of_digits,epsilon=0,n = 0):
     
     #initialize values
     xn_1 = xn - ((y.subs({x:xn}))/(y_prime.subs({x:xn})))
-    
+    e = sp.symbols('e')
+    dx =xn_1-xn
+    dx = dx.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+    dx = Float(dx,number_of_digits)
     list_of_values =[Float(xn,number_of_digits)]  
     
     #if we want to use epsilon
     
     if(epsilon != 0):
-        while(abs(xn_1-xn)>(epsilon/2)):
+        
+        while(abs(dx)>(epsilon/2)):
+            xn_1=xn_1.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            
             list_of_values.append(Float(xn_1,number_of_digits))
             xn = xn_1
             xn_1= xn - ((y.subs({x:xn}))/(y_prime.subs({x:xn})))
-            
+            dx =xn_1-xn
+            dx = dx.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            dx = Float(dx,number_of_digits)
     #if we want to use repetition n      
     
     else:
@@ -70,6 +78,3 @@ def halleys_method(f,xn,number_of_digits,epsilon=0,n = 0):
             
     #return list of values
     return list_of_values
-
-# print(newton_method("ln(x)",0.9,10,epsilon=000000000000000000000000000000000.1))
- 

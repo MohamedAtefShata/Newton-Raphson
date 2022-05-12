@@ -24,24 +24,29 @@ class NewtonRaphson:
         i=1
         
         while  True:
+            e = sp.symbols('e')
+            xn.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
             xn_1=xn
+            xn_1.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
             fxi=fx.subs({x:xn_1})
             fxpi=f_prime.subs({x:xn_1})
             fxdpi=f_d_prime.subs({x:xn_1})
-            xn=Float(xn_1- (fxi/fxpi))
-            xn=xn.round(number_of_digits)
+            fxi=fxi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            fxpi=fxpi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            fxdpi=fxdpi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            xn=Float((xn_1- (fxi/fxpi)))
             self.itteration_list.append({"n":i,
                               # "fx":fxi,
                               # "fdx":fxpi,
                               # "fddx":fxdpi,
-                               "newton":f'{Float(xn):.{number_of_digits}f}',
+                               "newton":f'{xn}',
                                "hally":"--"
                                
                                })
             
             i+=1
-            # print(abs(Float(xn-xn_1,number_of_digits+1)))
-            if (abs(Float(xn-xn_1))<(epsilon/2)) or i>max_n: 
+            
+            if (abs(xn-xn_1)<(epsilon/2)) or i>max_n: 
                 break
         self.x_val=xn
         max_n=i-1
@@ -49,11 +54,17 @@ class NewtonRaphson:
         i=0
         while  True:
             xn_1=xn
+            xn.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            xn_1.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            fxi=fxi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            fxpi=fxpi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            fxdpi=fxdpi.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
             # fxi=fx.subs({x:xn_1})
             # fxpi=f_prime.subs({x:xn_1})
             # fxdpi=f_d_prime.subs({x:xn_1})
             h=self.halley_rational.subs({x:xn_1})   #(2*fxi*fxpi)/((2*fxpi*fxpi)-(fxi*fxdpi))
-            xn=Float(xn_1 -h).round(number_of_digits)
+            h = h.subs({e: 2.718281828459045235360287471352662497757247093699959574966967627724076630353})
+            xn=Float(xn_1 -h,number_of_digits)
             
             self.itteration_list[i]["hally"]=f'{Float(xn):.{number_of_digits}f}'
             i+=1
@@ -61,8 +72,3 @@ class NewtonRaphson:
             if (abs(Float(xn-xn_1,number_of_digits+1))<(epsilon/2)) or i>=max_n: 
                 break
             
-
-# newt=NewtonRaphson("x**2-2",1,number_of_digits=6,epsilon="10^-100")
-# for e in newt.itteration_list:
-#     print(e)
-
